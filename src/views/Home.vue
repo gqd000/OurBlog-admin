@@ -7,6 +7,31 @@
       <el-main>
         <section class="data_section">
           <header class="section_title">数据统计</header>
+          <!-- 当日数据 可以ban了 -->
+          <!--
+          <el-row :gutter="20" style="margin-bottom: 10px;">
+            <el-col :span="4">
+              <div class="data_list today_head">
+                <span class="data_num head">当日数据：</span>
+              </div>
+            </el-col>
+            <el-col :span="4">
+              <div class="data_list">
+                <span class="data_num">{{ userCount }}</span> 新增用户
+              </div>
+            </el-col>
+            <el-col :span="4">
+              <div class="data_list">
+                <span class="data_num">{{ orderCount }}</span> 新增订单
+              </div>
+            </el-col>
+            <el-col :span="4">
+              <div class="data_list">
+                <span class="data_num">{{ adminCount }}</span> 新增管理员
+              </div>
+            </el-col>
+          </el-row>
+          -->
           <!-- 总数据 必须显示 -->
           <el-row style="margin: 40px auto" :gutter="20">
             <el-col :span="4">
@@ -32,13 +57,7 @@
           </el-row>
         </section>
         <!-- 图表 -->
-        <el-container>
-          <div id="main" style="width:800px;height:400px"></div>
-          <div style="display:flex;width:400px;flex-wrap:wrap;justify-content:space-between">
-            <el-header style="width:400px">文章标签</el-header>
-            <el-tag type="success" v-bind:key="tag" v-for="tag in tags">{{ tag }}</el-tag>
-          </div>
-        </el-container>
+        <div id="main" style="width: 100vw - 200px;height:400px;"></div>
       </el-main>
     </el-container>
   </div>
@@ -70,7 +89,6 @@ export default {
       allUserCount: 0,
       allArticleCount: 0,
       allAdminCount: 0,
-      tags: ["Spring", "Java", "JavaScript", "C++", "Python"]
     };
   },
   methods: {
@@ -91,45 +109,65 @@ export default {
     var myChart = echarts.init(document.getElementById("main"));
 
     // 指定图表的配置项和数据
-    const option = {
-      // legend: {
-      //   // 图例
-      //   data: ["Spring", "JavaScript", "Java", "C++", "Python"],
-      //   left: "10%",
-      //   top: "30%",
-      //   orient: "vertical",
-      // },
+    var option = {
       title: {
-        // 设置饼图标题，位置设为顶部居中
-        text: "文章分类",
-        top: "0%",
-        left: "center",
+        text: "走势图",
+      },
+      tooltip: {
+        trigger: "axis",
+      },
+      legend: {
+        data: ["邮件营销", "联盟广告", "视频广告", "直接访问", "搜索引擎"],
+      },
+      grid: {
+        left: "3%",
+        right: "4%",
+        bottom: "3%",
+        containLabel: true,
+      },
+      toolbox: {
+        feature: {
+          saveAsImage: {},
+        },
+      },
+      xAxis: {
+        type: "category",
+        boundaryGap: false,
+        data: ["周一", "周二", "周三", "周四", "周五", "周六", "周日"],
+      },
+      yAxis: {
+        type: "value",
       },
       series: [
         {
-          type: "pie",
-          data: [
-            {
-              value: 463,
-              name: "Spring",
-            },
-            {
-              value: 395,
-              name: "JavaScript",
-            },
-            {
-              value: 157,
-              name: "Java",
-            },
-            {
-              value: 149,
-              name: "C++",
-            },
-            {
-              value: 147,
-              name: "Python",
-            },
-          ],
+          name: "邮件营销",
+          type: "line",
+          stack: "总量",
+          data: [120, 132, 101, 134, 90, 230, 210],
+        },
+        {
+          name: "联盟广告",
+          type: "line",
+          stack: "总量",
+          data: [220, 182, 191, 234, 290, 330, 310],
+        },
+        {
+          name: "视频广告",
+          type: "line",
+          stack: "总量",
+          data: [150, 232, 201, 154, 190, 330, 410],
+        },
+        {
+          name: "直接访问",
+          type: "line",
+          stack: "总量",
+          data: [320, 332, 301, 334, 390, 330, 320],
+        },
+        {
+          name: "搜索引擎",
+          type: "line",
+          stack: "总量",
+          data: [820, 932, 901, 934, 1290, 1330, 1320],
         },
       ],
     };
