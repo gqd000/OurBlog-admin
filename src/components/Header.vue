@@ -11,16 +11,39 @@
         src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
       ></el-avatar>
       <el-dropdown-menu slot="dropdown">
-        <el-dropdown-item>首页</el-dropdown-item>
-        <el-dropdown-item>退出</el-dropdown-item>
+        <el-dropdown-item @click.native="gotoIndex">首页</el-dropdown-item>
+        <el-dropdown-item @click.native="handleLogout">退出</el-dropdown-item>
       </el-dropdown-menu>
     </el-dropdown>
   </div>
 </template>
 
 <script>
+import { AdminLogoutApi } from "@/api";
+
 export default {
-  name: "Header"
+  name: "Header",
+  data() {},
+  methods: {
+    jump() {
+      this.$router.push("/login");
+    },
+    handleLogout() {
+      this.$confirm("是否确认退出？", "确定退出", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消"
+      }).then(() => {
+        const res = AdminLogoutApi();
+        if (res.data.code == 1) {
+          this.$massage.success(res.data.msg);
+          this.$store.commit("logout");
+          localStorage.removeItem("userInfo");
+          this.$router.push("/index");
+          this.jump();
+        }
+      });
+    }
+  }
 };
 </script>
 

@@ -35,12 +35,16 @@
         <el-container>
           <div id="main" style="width:800px;height:400px"></div>
           <div
-            style="display:flex;width:400px;flex-wrap:wrap;justify-content:space-between"
+            style="display:flex;width:400px;flex-wrap:wrap;justify-content:flex-start"
           >
             <el-header style="width:400px">文章标签</el-header>
-            <el-tag type="success" v-bind:key="tag" v-for="tag in tags">{{
-              tag
-            }}</el-tag>
+            <el-tag
+              style="margin-right:10px"
+              type="success"
+              v-bind:key="tag"
+              v-for="tag in tags"
+              >{{ tag }}</el-tag
+            >
           </div>
         </el-container>
       </el-main>
@@ -49,6 +53,7 @@
 </template>
 
 <script>
+import { TagsListApi } from "@/api";
 import Header from "../components/Header";
 import * as echarts from "echarts";
 // 补0函数
@@ -84,6 +89,10 @@ export default {
 
       const res3 = await this.$axios.admins();
       this.allAdminCount = res3.data;
+
+      const res4 = await TagsListApi();
+      this.tags = res4.data.data;
+      console.log(res4.data.data);
     }
   },
   mounted() {
