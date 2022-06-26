@@ -7,7 +7,7 @@ import axios from "axios";
 import API from "./utils/index";
 // Vue.prototype.$axios = API;
 // 挂载到Vue
-axios.defaults.baseURL = '/api'
+axios.defaults.baseURL = "/api";
 
 Vue.use(API);
 Vue.config.productionTip = false;

@@ -11,7 +11,7 @@ export default {
 
 
   // 用户列表数据
-  USERLIST: `v1/users/list?`,
+  USERLIST: `admin/users/list?`,
   // 商家列表总数
   SHOPCOUNT: "shopping/restaurants/count",
   // 商家列表经纬度

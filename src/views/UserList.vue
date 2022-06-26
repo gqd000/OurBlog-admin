@@ -33,7 +33,7 @@ export default {
     return {
       tableData: [],
       pagenum: 1,
-      pagesize: 20,
+      pagesize: 10,
       total: 0,
       num: 0
     };

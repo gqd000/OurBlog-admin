@@ -6,7 +6,11 @@
       ref="ruleForm"
       class="demo-ruleForm"
     >
-    <el-form-item><h1 style="font-size: 24px;text-align: center">OurBlog 后台管理系统</h1></el-form-item>
+      <el-form-item
+        ><h1 style="font-size: 24px;text-align: center">
+          OurBlog 后台管理系统
+        </h1></el-form-item
+      >
       <el-form-item prop="username">
         <el-input v-model="ruleForm.username" placeholder="用户名"></el-input>
       </el-form-item>
@@ -19,7 +23,7 @@
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="submitForm('ruleForm')"
-          >立即创建</el-button
+          >立即登录</el-button
         >
       </el-form-item>
     </el-form>
@@ -27,6 +31,8 @@
 </template>
 
 <script>
+import { AdminLoginApi } from "@/api";
+
 export default {
   name: "login",
   data() {
@@ -53,16 +59,16 @@ export default {
     };
   },
   methods: {
-
     // 异步函数写法
     submitForm(formName) {
       this.$refs[formName].validate(async valid => {
         if (!valid) return;
-        let { data: res } = await this.$axios.login(this.ruleForm);
-        if (res.code != 1) {
-          this.$message.error(res.msg);
+
+        const res = await AdminLoginApi(JSON.stringify(this.ruleForm));
+        if (res.data.code != 1) {
+          this.$message.error(res.data.msg);
         } else {
-          this.$message.success(res.msg);
+          this.$message.success(res.data.msg);
           this.$router.push("/index");
         }
         console.log(res);
